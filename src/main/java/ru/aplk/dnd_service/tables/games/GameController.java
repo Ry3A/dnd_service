@@ -25,7 +25,11 @@ public class GameController {
         return gameService.getAllGames();
     }
 
-    // Получение игры по ID
+    @GetMapping("/my")
+    public List<Game> getMyGames() {
+        return gameService.getGamesOfCurrentUser();
+    }
+
     @GetMapping("/{id}")
     public Game getGameById(@PathVariable Long id) {
         return gameService.getGameById(id);

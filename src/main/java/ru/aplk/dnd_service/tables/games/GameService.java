@@ -26,6 +26,7 @@ public class GameService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         game.setOwner(user);
+        game.getPlayers().add(user);
         return gameRepository.save(game);
     }
 
@@ -40,7 +41,17 @@ public class GameService {
                 .orElseThrow(() -> new RuntimeException("Game not found with id: " + id));
     }
 
+    // Получить игры текущего пользователя
+    public List<Game> getGamesOfCurrentUser() {
+        String username = getCurrentUsername();
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        return gameRepository.findByPlayersContaining(user);
+    }
+
     // Присоединение к игре по токену
+
     public Game joinGame(Long gameId) {
         String username = getCurrentUsername();
         User user = userRepository.findByEmail(username)

@@ -7,6 +7,7 @@ import lombok.Data;
 import ru.aplk.dnd_service.users.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.NoArgsConstructor;
@@ -39,7 +40,7 @@ public class Game {
             joinColumns = @JoinColumn(name = "game_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private List<User> players; // Участники игры
+    private List<User> players = new ArrayList<>();
 
     private LocalDateTime dateTime;
 
