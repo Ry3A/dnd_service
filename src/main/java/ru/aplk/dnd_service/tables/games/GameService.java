@@ -3,13 +3,18 @@ package ru.aplk.dnd_service.tables.games;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.aplk.dnd_service.users.User;
 import ru.aplk.dnd_service.users.UserRepo;
+import ru.aplk.dnd_service.tables.characters.CharacterRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.aplk.dnd_service.tables.characters.Character;
+
 
 
 @Service
@@ -18,6 +23,7 @@ public class GameService {
 
     private final GameRepository gameRepository;
     private final UserRepo userRepository;
+    private final CharacterRepository characterRepository;
 
     // Создание игры, привязка к пользователю
     public Game createGame(Game game) {
@@ -80,4 +86,29 @@ public class GameService {
             return principal.toString();
         }
     }
+
+    @Transactional
+    public Game joinGameWithCharacter(Long gameId, Long characterId) {
+        String username = getCurrentUsername();
+        User user = userRepository.findByEmail(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Game game = getGameById(gameId);
+
+        Character character = characterRepository.findById(characterId)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+
+        // Привязываем персонажа к игре
+        character.setGame(game);
+        characterRepository.save(character);
+
+        // Инициализируем список игроков если он пустой
+        if (game.getPlayers() == null) {
+            game.setPlayers(new ArrayList<>());
+        }
+        game.getPlayers().add(user);
+
+        return gameRepository.save(game);
+    }
+
 }

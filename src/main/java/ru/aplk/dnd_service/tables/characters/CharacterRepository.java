@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Long> {
-    // Здесь больше ничего не надо! Только базовые методы CRUD
+    // Дополнительный метод
+    List<Character> findByGameId(Long gameId);
 }

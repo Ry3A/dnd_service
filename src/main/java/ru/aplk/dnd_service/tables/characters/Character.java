@@ -5,10 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.aplk.dnd_service.tables.backgrounds.Background;
-import ru.aplk.dnd_service.tables.classes.Class;
-import ru.aplk.dnd_service.tables.races.Race;
-import ru.aplk.dnd_service.users.User;
+
+import ru.aplk.dnd_service.tables.games.Game;
+
 @Entity
 @Table(name = "character")
 @Data
@@ -29,6 +28,10 @@ public class Character {
     private Long race_id;
     @Column(name = "class_id")
     private Long class_id;
+
+    @ManyToOne
+    @JoinColumn(name = "game_id") // В таблице персонажей будет колонка game_id
+    private Game game;
 
     private String alignment;
 

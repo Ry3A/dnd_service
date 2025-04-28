@@ -40,4 +40,9 @@ public class GameController {
     public Game joinGame(@PathVariable Long gameId) {
         return gameService.joinGame(gameId);
     }
+
+    @PostMapping("/join/{gameId}/character/{characterId}")
+    public Game joinGameWithCharacter(@PathVariable Long gameId, @PathVariable Long characterId) {
+        return gameService.joinGameWithCharacter(gameId, characterId);
+    }
 }

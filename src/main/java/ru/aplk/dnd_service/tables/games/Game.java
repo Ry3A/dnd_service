@@ -9,7 +9,7 @@ import ru.aplk.dnd_service.users.User;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
+import ru.aplk.dnd_service.tables.characters.Character;
 import lombok.NoArgsConstructor;
 
 
@@ -34,7 +34,10 @@ public class Game {
     @JoinColumn(name = "owner_id")
     private User owner; // Создатель игры (мастер)
 
-    @ManyToMany
+    @OneToMany(mappedBy = "game")
+    private List<Character> characters = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "game_players",
             joinColumns = @JoinColumn(name = "game_id"),
