@@ -8,8 +8,9 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-//import ru.aplk.dnd_service.tables.characters.Character;
+import ru.aplk.dnd_service.tables.characters.Character;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 /////АААААААААААААААААААААААААААААА
@@ -28,12 +29,10 @@ public class User implements UserDetails{
     private Long id;
     private String email;
     private String password;
-    @Column(name = "position_id")
-    private Long positionId;
-    //@ElementCollection
-    //private List<Character> languages; //РАЗОБРАТЬСЯ С ПеРСОНАЖЕМ!!!
 
-
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "user_id")
+    private List<Character> characters;
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -54,7 +53,6 @@ public class User implements UserDetails{
         return email;
     }
 
-//    public List<Language> getLanguages() { return languages;}
 
     public Role getRole() {
         return role;
