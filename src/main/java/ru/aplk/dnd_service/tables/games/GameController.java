@@ -41,8 +41,9 @@ public class GameController {
         return gameService.joinGame(gameId);
     }
 
-    @PostMapping("/join/{gameId}/character/{characterId}")
-    public Game joinGameWithCharacter(@PathVariable Long gameId, @PathVariable Long characterId) {
-        return gameService.joinGameWithCharacter(gameId, characterId);
+    @PostMapping("/join")
+    public Game joinGameWithCharacter(@RequestBody JoinRequest request) {
+        return gameService.joinGameWithCharacter(request.getGameId(), request.getCharacterId());
     }
+
 }

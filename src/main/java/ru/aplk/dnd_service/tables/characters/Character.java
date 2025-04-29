@@ -1,5 +1,6 @@
 package ru.aplk.dnd_service.tables.characters;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,7 @@ public class Character {
 
     @ManyToOne
     @JoinColumn(name = "game_id") // В таблице персонажей будет колонка game_id
+    @JsonIgnore
     private Game game;
 
     private String alignment;

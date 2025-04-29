@@ -1,5 +1,6 @@
 package ru.aplk.dnd_service.tables.games;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,7 +38,8 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private List<Character> characters = new ArrayList<>();
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "game_players",
             joinColumns = @JoinColumn(name = "game_id"),
@@ -45,7 +47,8 @@ public class Game {
     )
     private List<User> players = new ArrayList<>();
 
-    private LocalDateTime dateTime;
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
 
     private Integer maxPlayers; // Ограничение по количеству игроков
 }
