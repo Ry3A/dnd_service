@@ -156,6 +156,12 @@ public class CharacterController {
         Character character = characterService.getCharacterById(id);
         return characterService.getInvestigation(character);
     }
+
+    @PutMapping("/{id}")
+    public Character updateCharacter(@PathVariable Long id, @RequestBody Character updatedCharacter) {
+        return characterService.updateCharacter(id, updatedCharacter);
+    }
+
 }
 
 

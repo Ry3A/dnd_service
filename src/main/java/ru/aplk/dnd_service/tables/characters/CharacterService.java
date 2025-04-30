@@ -89,6 +89,59 @@ public class CharacterService {
         return skills;
     }
 
+    public Character updateCharacter(Long id, Character updatedData) {
+        Character character = characterRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Character not found"));
+
+        character.setName(updatedData.getName());
+        character.setAlignment(updatedData.getAlignment());
+        character.setStrength(updatedData.getStrength());
+        character.setDexterity(updatedData.getDexterity());
+        character.setConstitution(updatedData.getConstitution());
+        character.setIntelligence(updatedData.getIntelligence());
+        character.setWisdom(updatedData.getWisdom());
+        character.setCharisma(updatedData.getCharisma());
+        character.setProficiencyBonus(updatedData.getProficiencyBonus());
+
+        character.setProficientInAcrobatics(updatedData.isProficientInAcrobatics());
+        character.setProficientInAnimalHandling(updatedData.isProficientInAnimalHandling());
+        character.setProficientInArcana(updatedData.isProficientInArcana());
+        character.setProficientInAthletics(updatedData.isProficientInAthletics());
+        character.setProficientInDeception(updatedData.isProficientInDeception());
+        character.setProficientInHistory(updatedData.isProficientInHistory());
+        character.setProficientInInsight(updatedData.isProficientInInsight());
+        character.setProficientInIntimidation(updatedData.isProficientInIntimidation());
+        character.setProficientInInvestigation(updatedData.isProficientInInvestigation());
+        character.setProficientInMedicine(updatedData.isProficientInMedicine());
+        character.setProficientInNature(updatedData.isProficientInNature());
+        character.setProficientInPerception(updatedData.isProficientInPerception());
+        character.setProficientInPerformance(updatedData.isProficientInPerformance());
+        character.setProficientInPersuasion(updatedData.isProficientInPersuasion());
+        character.setProficientInReligion(updatedData.isProficientInReligion());
+        character.setProficientInSleightOfHand(updatedData.isProficientInSleightOfHand());
+        character.setProficientInStealth(updatedData.isProficientInStealth());
+        character.setProficientInSurvival(updatedData.isProficientInSurvival());
+
+        character.setLevel(updatedData.getLevel());
+        character.setExperiencePoints(updatedData.getExperiencePoints());
+        character.setArmorClass(updatedData.getArmorClass());
+        character.setInitiative(updatedData.getInitiative());
+        character.setSpeed(updatedData.getSpeed());
+        character.setCurrentHitPoints(updatedData.getCurrentHitPoints());
+        character.setMaxHitPoints(updatedData.getMaxHitPoints());
+        character.setTemporaryHitPoints(updatedData.getTemporaryHitPoints());
+        character.setHitDice(updatedData.getHitDice());
+        character.setDeathSavesSuccesses(updatedData.getDeathSavesSuccesses());
+        character.setDeathSavesFailures(updatedData.getDeathSavesFailures());
+
+        character.setInspiration(updatedData.isInspiration());
+        character.setPassivePerception(updatedData.getPassivePerception());
+        character.setExhaustionLevel(updatedData.getExhaustionLevel());
+
+        return characterRepository.save(character);
+    }
+
+
     // Методы для получения отдельных навыков
     public int getSleightOfHand(Character character) {
         return calculateSkill(character.getDexterity(), character.isProficientInSleightOfHand(), character.getProficiencyBonus());
